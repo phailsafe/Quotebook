@@ -17,28 +17,37 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  <!-- > Name the product in a way the reader (i.e. your target customers) will understand. -->
+  Quotebook
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  <!-- > Describe who the market for the product is and what benefit they get. One sentence only underneath the title. -->
+  For inspirational people to share and discover inspiration
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  <!-- > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good. -->
+  Quotebook lets users browse our inspirational quotes and save them to their profile as favorites. They can also author their own quotes and let other people draw inspiration from their wise words.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  <!-- > Describe the problem your product solves. -->
+  Sometimes people struggle with finding inspiration(al quotes).
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  <!-- > Describe how your product elegantly solves the problem. -->
+  Quotebook gives users an outlet for providing inspiration, as well as finding it in the words of a stranger.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  <!-- > A quote from a spokesperson in your company. -->
+  "Quotebook will help millions of people across the world find the inspiration they need to be the best person they can be."
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  <!-- > Describe how easy it is to get started. -->
+  Just go to quotebook.com and begin browsing. Sign-up or Login to make your own quotes and save favorites.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  <!-- > Provide a quote from a hypothetical customer that describes how they experienced the benefit. -->
+  "I was struggling with depression and cat pictures simply weren't enough. Then I decided to go to quotebook.com, and my outlook on life has been better since."
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  <!-- > Wrap it up and give pointers where the reader should go next. -->
+  So if you are struggling to find motivation then head over to quotebook.com and get inspired today.
