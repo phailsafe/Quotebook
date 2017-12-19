@@ -32,7 +32,13 @@ app.get('/quote', (req, res) => {
     
   // } else {
     request('http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en', (err, response, body) => {
-      let quote = JSON.parse(body);
+      let quote;
+      try {
+        quote = JSON.parse(body)
+
+      } catch (err) {
+        quote = { quoteText: 'this api sucks', quoteAuthor: 'the dev' };
+      }
       console.log('quote', quote);
       let text = quote.quoteText;
       let author = quote.quoteAuthor;
