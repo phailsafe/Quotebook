@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 // var items = require('../database-mysql');
 var items = require('../database-mongo');
 var request = require('request');
-var unescapeJS = require('unescape-js');
 var app = express();
 
 // UNCOMMENT FOR REACT
