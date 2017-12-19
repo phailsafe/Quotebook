@@ -73,8 +73,8 @@ app.post('/signup', (req, res) => {
 
 app.get('/quote', (req, res) => {
   console.log('get quote');
-  const chance = Math.floor(Math.random() * 2);
-  if (chance) {
+  const chance = Math.floor(Math.random() * 3);
+  if (!chance) {
     Quote.findOne()
       .then((quote) => {
         console.log('db quote', quote);
@@ -118,40 +118,43 @@ const isUserSession = function isUserSession(req, res, next) {
 };
 
 app.post('/favorite', isUserSession, (req, res) => {
-  const quote = req.body;
+  const { quote } = req.body;
   console.log('favoriting', quote);
   const username = req.session.user;
   console.log('username', username);
   User.findOne({ name: username })
     .then((user) => {
-      console.log('user found', user);
-      res.end();
+      // console.log('user found', user);
+      Quote.findOne({ text: quote.text, author: quote.author })
+        .then((found) => {
+          if (found) {
+            console.log('found quote');
+            // add quote id and user id to favorites
+            res.end();
+          } else {
+            console.log('saving quote');
+            const newQuote = new Quote({
+              text: quote.text,
+              author: quote.author,
+              id_user: user.id,
+            });
+            newQuote.save()
+              .then(() => {
+                // add quote id and user id to favorites
+                res.end();
+              })
+              .catch((err) => {
+                console.log('error saving quote', err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.log('error finding quote', err);
+        });
     })
     .catch((error) => {
       console.log('error finding user', error);
     });
-  // Quote.findOne({ text: quote.text, author: quote.author })
-  //   .then((found) => {
-  //     if (found) {
-  //       console.log('found quote');
-  //       // add quote id and user id to favorites
-  //       res.end();
-  //     } else {
-  //       console.log('saving quote');
-  //       const newQuote = new Quote({ text: quote.text, author: quote.author });
-  //       newQuote.save()
-  //         .then(() => {
-  //           // add quote id and user id to favorites
-  //           res.end();
-  //         })
-  //         .catch((err) => {
-  //           console.log('error saving quote', err);
-  //         });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log('error finding quote', err);
-  //   });
 });
 
 app.listen(process.env.PORT, () => {
