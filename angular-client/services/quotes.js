@@ -46,7 +46,15 @@ angular.module('app')
           console.log(err);
         });
     };
-    // this.getByUser
 
-    // this.getUserFavorite
+    this.getFavorites = function getFavorites(callback) {
+      $http.get('/favorite')
+        .then((quotes) => {
+          const favs = quotes.data;
+          callback(favs);
+        })
+        .catch((err) => {
+          console.log('error getting favorites', err);
+        });
+    };
   });

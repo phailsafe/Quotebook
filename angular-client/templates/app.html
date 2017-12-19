@@ -2,7 +2,7 @@
   <div>
     <h1>QUOTEBOOK</h1>
 
-    <quote quote=$ctrl.quote > </quote>
+    <quote quote=$ctrl.quote ></quote>
     <button type="submit" ng-click="$ctrl.getNewQuote()">New Quote</button>
     <button type="submit" ng-click="$ctrl.saveFavorite($ctrl.quote)" ng-show="!$ctrl.showSignin && !$ctrl.showLogin">Save</button>
     <button type="submit" ng-click="$ctrl.logout()" ng-show="!$ctrl.showSignin && !$ctrl.showLogin" >Logout</button>
@@ -29,6 +29,15 @@
       </form>
     </div>
     <button type="submit" ng-click="$ctrl.switchLoginSignup()" ng-show="$ctrl.showSignin || $ctrl.showLogin">{{$ctrl.formMode}}</button>
+    <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
+      <button type="submit" ng-click="$ctrl.getFavorites()">Load Favorites</button>
+      <ul>
+        <div ng-repeat="fav in $ctrl.favorites">
+          <quote quote=fav  ></quote>
+          <button>Delete</button>
+        </div>
+      </ul>
+    </div>
     <!-- <a href='/login'><button>Login</button></a> -->
     <!-- next quote button -->
     <!-- login button -->

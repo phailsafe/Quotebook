@@ -22,14 +22,13 @@ app.use(session({
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  console.log('login', req.body);
   User.findOne({ name: username, password })
     .then((found) => {
       if (found) {
-        console.log('user logged in');
+        // console.log('user logged in');
         req.session.regenerate(() => {
           req.session.user = username;
-          console.log('session made', req.session);
+          console.log('session started', req.session);
           req.session.save();
           res.redirect('/');
         });
@@ -44,7 +43,7 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  console.log('sign up', req.body);
+  // console.log('sign up', req.body);
   const { username, password } = req.body;
   User.findOne({ name: username, password })
     .then((found) => {
@@ -77,6 +76,7 @@ app.post('/logout', (req, res) => {
     if (err) {
       console.log('error ending session', err);
     }
+    console.log('logged out');
     res.end();
   });
 });
@@ -84,11 +84,11 @@ app.post('/logout', (req, res) => {
 app.get('/quote', (req, res) => {
   console.log('get quote');
   const chance = Math.floor(Math.random() * 4);
-  console.log('chance', chance);
+  // console.log('chance', chance);
   if (!chance) {
     Quote.findOne()
       .then((quote) => {
-        console.log('db quote', quote);
+        // console.log('db quote', quote);
         res.send(quote);
       })
       .catch((error) => {
@@ -104,7 +104,7 @@ app.get('/quote', (req, res) => {
       } catch (error) {
         quote = { quoteText: 'this api sucks', quoteAuthor: 'the dev' };
       }
-      console.log('quote', quote);
+      // console.log('quote', quote);
       const text = quote.quoteText;
       const author = quote.quoteAuthor;
       const newQuote = {
@@ -117,7 +117,6 @@ app.get('/quote', (req, res) => {
 });
 
 const isUserSession = function isUserSession(req, res, next) {
-  console.log('session', req.session);
   if (req.session.user) {
     console.log('is user session');
     next();
@@ -127,6 +126,26 @@ const isUserSession = function isUserSession(req, res, next) {
     res.redirect('/');
   }
 };
+
+app.get('/favorite', isUserSession, (req, res) => {
+  const username = req.session.user;
+  User.findOne({ name: username })
+    .then(user => Favorite.find({ id_user: user.id }))
+    .then((favs) => {
+      return Promise.all(favs.map((fav) => {
+        // console.log('fav', fav);
+        return Quote.findOne({ _id: fav.id_quote });
+      }));
+    })
+    .then((quotes) => {
+      // console.log('quotes', quotes);
+      res.send(quotes);
+    })
+    .catch((err) => {
+      console.log('error', err);
+      res.end();
+    });
+});
 
 app.post('/favorite', isUserSession, (req, res) => {
   const { quote } = req.body;
@@ -141,7 +160,14 @@ app.post('/favorite', isUserSession, (req, res) => {
           if (found) {
             console.log('found quote');
             // add quote id and user id to favorites
-            res.end();
+            const newFav = new Favorite({ id_user: user.id, id_quote: found.id });
+            newFav.save()
+              .then(() => {
+                res.end();
+              })
+              .catch((err) => {
+                console.log('error saving favorite', err);
+              });
           } else {
             console.log('saving quote');
             const newQuote = new Quote({
@@ -152,7 +178,14 @@ app.post('/favorite', isUserSession, (req, res) => {
             newQuote.save()
               .then(() => {
                 // add quote id and user id to favorites
-                res.end();
+                const newFav = new Favorite({ id_user: user.id, id_quote: newQuote.id });
+                newFav.save()
+                  .then(() => {
+                    res.end();
+                  })
+                  .catch((err) => {
+                    console.log('error saving favorite', err);
+                  });
               })
               .catch((err) => {
                 console.log('error saving quote', err);

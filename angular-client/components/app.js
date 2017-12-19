@@ -33,6 +33,18 @@ angular.module('app')
         this.quote = newQuote;
       });
     };
+    this.getFavorites = function getFavorites() {
+      quotesService.getFavorites((favs) => {
+        // console.log(favs);
+        this.favorites = favs;
+      });
+    };
+    this.favorites = [
+      { text: 'some text', author: 'some dude' },
+      { text: 'some more text', author: 'some other dude' },
+      { text: 'even more text', author: 'yet another dude' },
+    ];
+
     this.getNewQuote = this.getNewQuote.bind(this);
     this.saveFavorite = quotesService.saveFavorite.bind(this);
 
