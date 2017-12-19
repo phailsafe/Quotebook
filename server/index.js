@@ -22,6 +22,7 @@ app.use(session({
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
+  console.log('login', req.body);
   User.findOne({ name: username, password })
     .then((found) => {
       if (found) {
@@ -71,9 +72,19 @@ app.post('/signup', (req, res) => {
     });
 });
 
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log('error ending session', err);
+    }
+    res.end();
+  });
+});
+
 app.get('/quote', (req, res) => {
   console.log('get quote');
-  const chance = Math.floor(Math.random() * 3);
+  const chance = Math.floor(Math.random() * 4);
+  console.log('chance', chance);
   if (!chance) {
     Quote.findOne()
       .then((quote) => {

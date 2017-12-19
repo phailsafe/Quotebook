@@ -4,26 +4,31 @@
 
     <quote quote=$ctrl.quote > </quote>
     <button type="submit" ng-click="$ctrl.getNewQuote()">New Quote</button>
-    <button type="submit" ng-click="$ctrl.saveFavorite($ctrl.quote)">Save</button>
+    <button type="submit" ng-click="$ctrl.saveFavorite($ctrl.quote)" ng-show="!$ctrl.showSignin && !$ctrl.showLogin">Save</button>
+    <button type="submit" ng-click="$ctrl.logout()" ng-show="!$ctrl.showSignin && !$ctrl.showLogin" >Logout</button>
 
 
-
-    <h3>Login</h3>
-    <form >
-      Username:
-      <input type="text" ng-model="username"/> 
-      Password:
-      <input type="password" ng-model="password"/>
-      <button type="submit" ng-click="$ctrl.login(username, password)">Login</button>
-    </form>
-    <h3>Sign Up</h3>
-    <form >
-      Username:
-      <input type="text" ng-model="username2"/> 
-      Password:
-      <input type="password" ng-model="password2"/>
-      <button type="submit" ng-click="$ctrl.signup(username2, password2)">Sign Up</button>
-    </form>
+    <div ng-show="$ctrl.showLogin" >
+      <h3>Login</h3>
+      <form >
+        Username:
+        <input type="text" ng-model="$ctrl.username"/> 
+        Password:
+        <input type="password" ng-model="$ctrl.password"/>
+        <button type="submit" ng-click="$ctrl.login()">Login</button>
+      </form>
+    </div>
+    <div ng-show="$ctrl.showSignin">
+      <h3>Sign Up</h3>
+      <form >
+        Username:
+        <input type="text" ng-model="$ctrl.username"/> 
+        Password:
+        <input type="password" ng-model="$ctrl.password"/>
+        <button type="submit" ng-click="$ctrl.signup()">Sign Up</button>
+      </form>
+    </div>
+    <button type="submit" ng-click="$ctrl.switchLoginSignup()" ng-show="$ctrl.showSignin || $ctrl.showLogin">{{$ctrl.formMode}}</button>
     <!-- <a href='/login'><button>Login</button></a> -->
     <!-- next quote button -->
     <!-- login button -->

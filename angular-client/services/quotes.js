@@ -19,6 +19,12 @@ angular.module('app')
           console.log(err);
         });
     };
+    this.logout = () => {
+      $http.post('/logout')
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
     this.getNewQuote = function getNewQuote(callback) {
       $http.get('/quote')
