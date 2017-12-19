@@ -36,15 +36,3 @@ module.exports.Favorite = Favorite;
 
 // to connect to database shell:
 // mongo ds041516.mlab.com: 41516 / heroku_xf5sf6rw - u heroku_xf5sf6rw - p 9hrvdilfl32k5gkdrjiapfn1k9
-
-// var selectAll = function(callback) {
-//   Item.find({}, function(err, items) {
-//     if(err) {
-//       callback(err, null);
-//     } else {
-//       callback(null, items);
-//     }
-//   });
-// };
-
-// module.exports.selectAll = selectAll;
