@@ -2,21 +2,25 @@ angular.module('app')
   .controller('AppCtrl', function AppCtrl(quotesService) {
     // login
     this.login = function login() {
-      quotesService.login(this.username, this.password, () => {
-        this.showLogin = false;
-        this.clearFields();
-        this.getFavorites();
-        this.getPosts();
-      });
+      if (this.username && this.password) {
+        quotesService.login(this.username, this.password, () => {
+          this.showLogin = false;
+          this.clearFields();
+          this.getFavorites();
+          this.getPosts();
+        });
+      }
     }.bind(this);
 
     // signup
     this.signup = function signup() {
-      quotesService.signup(this.username, this.password, () => {
-        this.showSignin = false;
-        this.clearFields();
-        this.getFavorites();
-      });
+      if (this.username && this.password) {
+        quotesService.signup(this.username, this.password, () => {
+          this.showSignin = false;
+          this.clearFields();
+          this.getFavorites();
+        });
+      }
     }.bind(this);
 
     // display correct form
