@@ -6,8 +6,11 @@ angular.module('app')
         username,
         password,
       })
-        .then(() => {
-          callback();
+        .then((loggedIn) => {
+          // console.log('logged', loggedIn);
+          if (loggedIn.data) {
+            callback();
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -18,8 +21,11 @@ angular.module('app')
         username,
         password,
       })
-        .then(() => {
-          callback();
+        .then((signedUp) => {
+          // console.log('signed up', signedUp);
+          if (signedUp.data) {
+            callback();
+          }
         })
         .catch((err) => {
           console.log(err);

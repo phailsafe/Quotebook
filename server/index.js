@@ -40,11 +40,11 @@ app.post('/login', (req, res) => {
           req.session.user = username;
           console.log('session started', req.session);
           req.session.save();
-          res.redirect('/');
+          res.send(true);
         });
       } else {
         console.log('invalid username/password');
-        res.redirect('/');
+        res.send(false);
       }
     })
     .catch((err) => {
@@ -59,7 +59,11 @@ app.post('/signup', (req, res) => {
     .then((found) => {
       if (found) {
         console.log('user already exists');
-        res.redirect('/');
+        req.session.regenerate(() => {
+          req.session.user = username;
+          req.session.save();
+          res.send(true);
+        });
       } else {
         const newUser = new User({ name: username, password });
         newUser.save()
@@ -68,7 +72,7 @@ app.post('/signup', (req, res) => {
             req.session.regenerate(() => {
               req.session.user = username;
               req.session.save();
-              res.redirect('/');
+              res.send(true);
             });
           })
           .catch((err) => {

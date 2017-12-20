@@ -39,6 +39,7 @@ angular.module('app')
     this.logout = function logout() {
       quotesService.logout();
       this.showLogin = true;
+      this.formMode = 'Sign Up';
       this.favorites = [];
       this.posts = [];
     }.bind(this);
