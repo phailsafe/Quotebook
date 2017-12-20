@@ -100,7 +100,11 @@ app.get('/quote', (req, res) => {
   const chance = Math.floor(Math.random() * 4);
   // console.log('chance', chance);
   if (!chance) {
-    Quote.findOne()
+    Quote.count()
+      .then((count) => {
+        const rand = Math.floor(Math.random() * count);
+        return Quote.findOne().skip(rand);
+      })
       .then((quote) => {
         // console.log('db quote', quote);
         res.send(quote);
@@ -114,7 +118,7 @@ app.get('/quote', (req, res) => {
     request('http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en', (err, response, body) => {
       let quote;
       try {
-        quote = JSON.parse(body)
+        quote = JSON.parse(body);
       } catch (error) {
         quote = { quoteText: 'this api sucks', quoteAuthor: 'the dev' };
       }

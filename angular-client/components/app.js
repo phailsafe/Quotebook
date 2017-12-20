@@ -94,10 +94,12 @@ angular.module('app')
     }.bind(this);
 
     this.editPost = function editPost(postId) {
-      quotesService.updatePost(this.userQuote, postId, () => {
-        this.getPosts();
-      });
-      this.clearFields();
+      if (this.userQuote) {
+        quotesService.updatePost(this.userQuote, postId, () => {
+          this.getPosts();
+        });
+        this.clearFields();
+      }
     }.bind(this);
 
     this.posts = [];
