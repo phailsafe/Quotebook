@@ -1,63 +1,75 @@
-<div>
-  <div>
-    <h1>QUOTEBOOK</h1>
-
-    <quote quote=$ctrl.quote ></quote>
-    <button type="submit" ng-click="$ctrl.getNewQuote()">New Quote</button>
-    <button type="submit" ng-click="$ctrl.saveFavorite()" ng-show="!$ctrl.showSignin && !$ctrl.showLogin">Save</button>
-    <button type="submit" ng-click="$ctrl.logout()" ng-show="!$ctrl.showSignin && !$ctrl.showLogin" >Logout</button>
-
-
-    <div ng-show="$ctrl.showLogin" >
-      <h3>Login</h3>
-      <form >
-        Username:
-        <input type="text" ng-model="$ctrl.username"/> 
-        Password:
-        <input type="password" ng-model="$ctrl.password"/>
-        <button type="submit" ng-click="$ctrl.login()">Login</button>
-      </form>
-    </div>
-    <div ng-show="$ctrl.showSignin">
-      <h3>Sign Up</h3>
-      <form >
-        Username:
-        <input type="text" ng-model="$ctrl.username"/> 
-        Password:
-        <input type="password" ng-model="$ctrl.password"/>
-        <button type="submit" ng-click="$ctrl.signup()">Sign Up</button>
-      </form>
-    </div>
-    <button type="submit" ng-click="$ctrl.switchLoginSignup()" ng-show="$ctrl.showSignin || $ctrl.showLogin">{{$ctrl.formMode}}</button>
-    <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
-      <h3>Author a Quote</h3>
+<div class="container">
+  <div class="row">
+    <div class="col-8 offset-1">
+      <h1 >QUOTEBOOK</h1>
+      
+      <quote quote=$ctrl.quote ></quote>
+      <button type="submit" class="btn btn-primary" ng-click="$ctrl.getNewQuote()">New Quote</button>
+      <button type="submit" class="btn btn-success" ng-click="$ctrl.saveFavorite()" ng-show="!$ctrl.showSignin && !$ctrl.showLogin">Save</button>
+      <button type="submit" class="btn btn-danger" ng-click="$ctrl.logout()" ng-show="!$ctrl.showSignin && !$ctrl.showLogin" >Logout</button>
+      
+      <div ng-show="$ctrl.showLogin" >
+        <h3 class="display-4">Login</h3>
+        <form >
+          <div class="form-group">
+            <label for="usernameL">Username</label>
+            <input type="text" ng-model="$ctrl.username" class="form-control" id="usernameL"/> 
+          </div>
+          <div class="form-group">
+            <label for="passwordL">Password</label>
+            <input type="password" ng-model="$ctrl.password" class="form-control" id="passwordL"/> 
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click="$ctrl.login()">Submit</button>
+        </form>
+      </div>
+      
+      <div ng-show="$ctrl.showSignin">
+        <h3 class="display-4">Sign Up</h3>
+        <form>
+          <div class="form-group">
+            <label for="usernameS">Username</label>
+            <input type="text" ng-model="$ctrl.username" class="form-control" id="usernameS" />
+          </div>
+          <div class="form-group">
+            <label for="passwordS">Password</label>
+            <input type="password" ng-model="$ctrl.password" class="form-control" id="passwordS" />
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click="$ctrl.signup()">Sign Up</button>
+        </form>
+      </div>
+      
+      <button type="submit" ng-click="$ctrl.switchLoginSignup()" class="btn btn-outline-primary" ng-show="$ctrl.showSignin || $ctrl.showLogin">{{$ctrl.formMode}}</button>
+      
+      <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
+        <h3 class="display-4">Author a Quote</h3>
       <form>
-        Quote:
-        <input type="textarea" ng-model="$ctrl.userQuote" /> 
-        <button type="submit" ng-click="$ctrl.writeQuote()">Post</button>
+        <div class="form-group">
+          <label for="userQuote">Quote</label>
+          <input type="text" class="form-control" ng-model="$ctrl.userQuote" /> 
+          <button type="submit" class="btn btn-primary" ng-click="$ctrl.writeQuote()">Post</button>
+        </div>
       </form>
+      </div>
+      
+      <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
+        <h3>Favorite Quotes</h3>
+        <ul>
+          <div ng-repeat="fav in $ctrl.favorites track by $index">
+            <quote quote=fav ></quote>
+            <button ng-click="$ctrl.deleteFav(fav.id_user, fav._id)" class="btn btn-danger">Delete</button>
+          </div>
+        </ul>
+      </div>
+      
+      <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
+        <h3>User Quotes</h3>
+        <ul>
+          <div ng-repeat="post in $ctrl.posts track by $index">
+            <quote quote=post></quote>
+            <button ng-click="$ctrl.editPost(post._id)" class="btn btn-warning">Edit</button>
+          </div>
+        </ul>
+      </div>
     </div>
-
-    <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
-      <h3>Favorite Quotes</h3>
-      <ul>
-        <div ng-repeat="fav in $ctrl.favorites track by $index">
-          <quote quote=fav ></quote>
-          <button ng-click="$ctrl.deleteFav(fav.id_user, fav._id)">Delete</button>
-        </div>
-      </ul>
-    </div>
-
-    <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
-      <h3>User Quotes</h3>
-      <ul>
-        <div ng-repeat="post in $ctrl.posts track by $index">
-          <quote quote=post></quote>
-          <button ng-click="$ctrl.editPost(post._id)">Edit</button>
-        </div>
-      </ul>
-    </div>
-
-
   </div>
 </div>
