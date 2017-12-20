@@ -1,20 +1,26 @@
 angular.module('app')
   .service('quotesService', function quotesService($http) {
-    this.login = (username, password) => {
+    this.login = (username, password, callback) => {
       // console.log('logging in:', username, password);
       $http.post('/login', {
         username,
         password,
       })
+        .then(() => {
+          callback();
+        })
         .catch((err) => {
           console.log(err);
         });
     };
-    this.signup = (username, password) => {
+    this.signup = (username, password, callback) => {
       $http.post('/signup', {
         username,
         password,
       })
+        .then(() => {
+          callback();
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -38,10 +44,13 @@ angular.module('app')
         });
     };
 
-    this.saveFavorite = function saveFavorite(quote) {
+    this.saveFavorite = function saveFavorite(quote, callback) {
       $http.post('/favorite', {
         quote,
       })
+        .then(() => {
+          callback();
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -58,7 +67,7 @@ angular.module('app')
         });
     };
 
-    this.deleteFavorite = function deleteFavorite(userId, quoteId) {
+    this.deleteFavorite = function deleteFavorite(userId, quoteId, callback) {
       // $http.delete('/favorite', {
       //   data: {
       //     userId,
@@ -75,6 +84,9 @@ angular.module('app')
           'Content-Type': 'application/json;charset=utf-8',
         },
       })
+        .then(() => {
+          callback();
+        })
         .catch((err) => {
           console.log('error deleting favorite', err);
         });
