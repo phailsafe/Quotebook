@@ -19,6 +19,16 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+const isUserSession = function isUserSession(req, res, next) {
+  if (req.session.user) {
+    console.log('is user session');
+    next();
+  } else {
+    console.log('no user session');
+    req.session.error = 'user not logged in';
+    res.redirect('/');
+  }
+};
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
@@ -116,16 +126,51 @@ app.get('/quote', (req, res) => {
   }
 });
 
-const isUserSession = function isUserSession(req, res, next) {
-  if (req.session.user) {
-    console.log('is user session');
-    next();
-  } else {
-    console.log('no user session');
-    req.session.error = 'user not logged in';
-    res.redirect('/');
-  }
-};
+app.post('/quote', isUserSession, (req, res) => {
+  const { text } = req.body;
+  console.log('text', text);
+  User.findOne({ name: req.session.user })
+    .then((user) => {
+      const newQuote = Quote({ text, author: user.name, id_user: user.id });
+      newQuote.save()
+        .then(() => {
+          res.end();
+        })
+        .catch((err) => {
+          console.log('error creating quote', err);
+        });
+    })
+    .catch((err) => {
+      console.log('error finding user', err);
+    });
+});
+
+app.get('/user', isUserSession, (req, res) => {
+  console.log('get user quotes');
+  User.findOne({ name: req.session.user })
+    .then((user) => {
+      // console.log('user', user);
+      return Quote.find({ author: user.name });
+    })
+    .then((quotes) => {
+      // console.log('quotes', quotes);
+      res.send(quotes);
+    })
+    .catch((err) => {
+      console.log('error getting user posts', err);
+    });
+});
+
+app.put('/user', isUserSession, (req, res) => {
+  console.log('update user post');
+  const { text, postId } = req.body;
+  Quote.update({ _id: postId }, { $set: { text } })
+    .exec((err) => {
+      if (err) { console.log('error editing post'); }
+      console.log('post updated');
+      res.end();
+    });
+});
 
 app.get('/favorite', isUserSession, (req, res) => {
   const username = req.session.user;

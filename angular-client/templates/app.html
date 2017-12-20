@@ -30,7 +30,16 @@
     </div>
     <button type="submit" ng-click="$ctrl.switchLoginSignup()" ng-show="$ctrl.showSignin || $ctrl.showLogin">{{$ctrl.formMode}}</button>
     <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
-      <!-- <button type="submit" ng-click="$ctrl.getFavorites()">Load Favorites</button> -->
+      <h3>Author a Quote</h3>
+      <form>
+        Quote:
+        <input type="textarea" ng-model="$ctrl.userQuote" /> 
+        <button type="submit" ng-click="$ctrl.writeQuote()">Post</button>
+      </form>
+    </div>
+
+    <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
+      <h3>Favorite Quotes</h3>
       <ul>
         <div ng-repeat="fav in $ctrl.favorites track by $index">
           <quote quote=fav ></quote>
@@ -38,10 +47,17 @@
         </div>
       </ul>
     </div>
-    <!-- <a href='/login'><button>Login</button></a> -->
-    <!-- next quote button -->
-    <!-- login button -->
-    <!-- sign-up button -->
-    <!-- <list items="$ctrl.items"/> -->
+
+    <div ng-show="!$ctrl.showSignin && !$ctrl.showLogin">
+      <h3>User Quotes</h3>
+      <ul>
+        <div ng-repeat="post in $ctrl.posts track by $index">
+          <quote quote=post></quote>
+          <button ng-click="$ctrl.editPost(post._id)">Edit</button>
+        </div>
+      </ul>
+    </div>
+
+
   </div>
 </div>

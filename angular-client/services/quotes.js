@@ -91,4 +91,47 @@ angular.module('app')
           console.log('error deleting favorite', err);
         });
     };
+
+    this.addQuote = function addQuote(text, callback) {
+      $http.post('/quote', {
+        text,
+      })
+        .then(() => {
+          callback();
+        })
+        .catch((err) => {
+          console.log('error sending quote', err);
+        });
+    };
+
+    this.getPosts = function getPosts(callback) {
+      $http.get('/user')
+        .then((quotes) => {
+          callback(quotes.data);
+        })
+        .catch((err) => {
+          console.log('error getting user posts', err);
+        });
+    };
+
+    this.updatePost = function updatePost(text, postId, callback) {
+      $http({
+        url: '/user',
+        method: 'PUT',
+        data: {
+          text,
+          postId,
+        },
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+      })
+        .then(() => {
+          callback();
+        })
+        .catch((err) => {
+          console.log('error updating post', err);
+        });
+    };
+
   });
