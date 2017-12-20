@@ -57,4 +57,26 @@ angular.module('app')
           console.log('error getting favorites', err);
         });
     };
+
+    this.deleteFavorite = function deleteFavorite(userId, quoteId) {
+      // $http.delete('/favorite', {
+      //   data: {
+      //     userId,
+      //     quoteId,
+      //   },
+      $http({
+        url: '/favorite',
+        method: 'DELETE',
+        data: {
+          userId,
+          quoteId,
+        },
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+      })
+        .catch((err) => {
+          console.log('error deleting favorite', err);
+        });
+    };
   });

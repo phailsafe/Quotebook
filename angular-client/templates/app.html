@@ -33,8 +33,8 @@
       <button type="submit" ng-click="$ctrl.getFavorites()">Load Favorites</button>
       <ul>
         <div ng-repeat="fav in $ctrl.favorites">
-          <quote quote=fav  ></quote>
-          <button>Delete</button>
+          <quote quote=fav ></quote>
+          <button ng-click="$ctrl.deleteFav(fav.id_user, fav._id)">Delete</button>
         </div>
       </ul>
     </div>

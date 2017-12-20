@@ -23,6 +23,7 @@ angular.module('app')
     this.logout = function logout() {
       quotesService.logout();
       this.showLogin = true;
+      this.favorites = [];
     };
     this.clearFields = function clearFields() {
       this.username = '';
@@ -39,15 +40,17 @@ angular.module('app')
         this.favorites = favs;
       });
     };
-    this.favorites = [
-      { text: 'some text', author: 'some dude' },
-      { text: 'some more text', author: 'some other dude' },
-      { text: 'even more text', author: 'yet another dude' },
-    ];
 
+    this.deleteFav = function deleteFav(userId, quoteId) {
+      console.log('user id', userId);
+      console.log('quote id', quoteId);
+      quotesService.deleteFavorite(userId, quoteId);
+    };
+    
     this.getNewQuote = this.getNewQuote.bind(this);
     this.saveFavorite = quotesService.saveFavorite.bind(this);
-
+    
+    this.favorites = [];
     this.formMode = 'Sign Up';
     this.showLogin = true;
     this.showSignin = false;

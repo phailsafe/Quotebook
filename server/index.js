@@ -131,14 +131,9 @@ app.get('/favorite', isUserSession, (req, res) => {
   const username = req.session.user;
   User.findOne({ name: username })
     .then(user => Favorite.find({ id_user: user.id }))
-    .then((favs) => {
-      return Promise.all(favs.map((fav) => {
-        // console.log('fav', fav);
-        return Quote.findOne({ _id: fav.id_quote });
-      }));
-    })
+    .then(favs => Promise.all(favs.map(fav => Quote.findOne({ _id: fav.id_quote }))))
     .then((quotes) => {
-      // console.log('quotes', quotes);
+      console.log('found favorites', quotes.length);
       res.send(quotes);
     })
     .catch((err) => {
@@ -198,6 +193,20 @@ app.post('/favorite', isUserSession, (req, res) => {
     })
     .catch((error) => {
       console.log('error finding user', error);
+    });
+});
+
+app.delete('/favorite', (req, res) => {
+  // console.log('body', req.body);
+  const { userId, quoteId } = req.body;
+  Favorite.remove({ id_user: userId, id_quote: quoteId })
+    .then(({ result }) => {
+      console.log('removed', result.n);
+      // console.log('removed favorite');
+      res.end();
+    })
+    .catch((err) => {
+      console.log('error deleting favorite', err);
     });
 });
 
